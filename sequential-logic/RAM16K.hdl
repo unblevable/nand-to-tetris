@@ -11,21 +11,16 @@
  */
 
 CHIP RAM16K {
-    IN in[16], load, address[15];
+    IN in[16], load, address[14];
     OUT out[16];
 
     PARTS:
-    DMux8Way(in=load, sel=address[0..2], a=aa, b=bb, c=cc, d=dd, e=ee, f=ff, g=gg, h=hh);
+    DMux4Way(in=load, sel=address[0..1], a=aa, b=bb, c=cc, d=dd);
 
-    RAM4K(in=in, load=aa, address=address[3..14], out=ram0);
-    RAM4K(in=in, load=bb, address=address[3..14], out=ram1);
-    RAM4K(in=in, load=cc, address=address[3..14], out=ram2);
-    RAM4K(in=in, load=dd, address=address[3..14], out=ram3);
-    RAM4K(in=in, load=ee, address=address[3..14], out=ram4);
-    RAM4K(in=in, load=ff, address=address[3..14], out=ram5);
-    RAM4K(in=in, load=gg, address=address[3..14], out=ram6);
-    RAM4K(in=in, load=hh, address=address[3..14], out=ram7);
+    RAM4K(in=in, load=aa, address=address[2..13], out=ram0);
+    RAM4K(in=in, load=bb, address=address[2..13], out=ram1);
+    RAM4K(in=in, load=cc, address=address[2..13], out=ram2);
+    RAM4K(in=in, load=dd, address=address[2..13], out=ram3);
 
-    Mux8Way16(a=ram0, b=ram1, c=ram2, d=ram3, e=ram4, f=ram5, g=ram6, h=ram7,
-                sel=address[0..2], out=out);
+    Mux4Way16(a=ram0, b=ram1, c=ram2, d=ram3, sel=address[0..1], out=out);
 }
